@@ -1,0 +1,40 @@
+name: webdev
+
+services:
+  webdev:
+    container_name: webdev
+    hostname: webdev
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8080"
+    networks:
+      - webapp-network
+
+  dbserver:
+    container_name: dbserver
+    hostname: dbserver
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+    networks:
+      - webapp-network
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - webapp-network
+    ports:
+      - "8001:8080"
+
+networks:
+  webapp-network:
+    name: webapp-network
+    driver: bridge

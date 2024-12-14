@@ -1,0 +1,7 @@
+.gitignore
+.idea
+README.md
+LICENSES
+go_sqlproject
+Dockerfile
+compose.yaml
